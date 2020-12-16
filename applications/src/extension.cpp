@@ -248,7 +248,10 @@ vector<shared_ptr<StandardIndexItem>> Applications::Private::indexApplications()
     QStringList xdg_current_desktop = QString(getenv("XDG_CURRENT_DESKTOP")).split(':',QString::SkipEmptyParts);
     QLocale loc;
     QStringList xdgAppDirs = QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation);
-    xdgAppDirs.append(QStandardPaths::standardLocations(QStandardPaths::DesktopLocation));
+
+    // Add the defaut XDG Desktop path if defined
+	if (QStandardPaths::standardLocations(QStandardPaths::DesktopLocation) != QStandardPaths::standardLocations(QStandardPaths::HomeLocation))
+    	xdgAppDirs.append(QStandardPaths::standardLocations(QStandardPaths::DesktopLocation));
 	
     /*
      * Create a list of desktop files to index (unique ids)
